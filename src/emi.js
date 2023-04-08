@@ -9,11 +9,11 @@
  */
 function Loan (amount, installmentsNumber, interestRate) {
   /** Checking params */
-  if (!amount ||
-     !installmentsNumber ||
-     !interestRate) {
-    throw new Error(`wrong parameters: ${amount} ${installmentsNumber} ${interestRate}`)
-  }
+  if (!amount || amount <= 0 ||
+    !installmentsNumber || installmentsNumber <= 0 ||
+    !interestRate || interestRate <= 0) {
+   throw new Error(`wrong parameters: ${amount} ${installmentsNumber} ${interestRate}`)
+ }
 
   const installments = []
   let interestSum = 0
@@ -157,3 +157,6 @@ if (typeof module === 'undefined') {
     rnd: rnd
   }
 }
+test('Should throw an error on negative interest rate', () => {
+  expect(() => EMI.Loan(10000, -1, 10)).toThrowError('wrong parameters: 10000 -1 10')
+})
